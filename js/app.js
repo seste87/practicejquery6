@@ -18,6 +18,24 @@
 
 var color = $('.selected').css('background-color');
 
+var red = $('#red').val();
+var green = $('#green').val();
+var blue = $('#blue').val();
+
+function getRGB() {
+  red = $('#red').val();
+  green = $('#green').val();
+  blue = $('#blue').val();
+  
+  return "rgb(" + red + ", " + green + ", " + blue + ")";
+}
+
+// update the new color
+function changeColor() {
+  
+  $('#newColor').css('background-color',getRGB());
+  
+}
 
 $('.controls li').click(function() {
   // remove selected from all other list items
@@ -30,8 +48,19 @@ $('.controls li').click(function() {
 
 
 
-$('#revealColorSelect').toggle(function () {
-    $('#colorSelect').fadeIn();
-  }, function () {
-    $('#colorSelect').fadeOut();
+$('#revealColorSelect').click(function () {
+    
+    changeColor();
+    $('#colorSelect').toggle();
+    
   });
+  
+$("input[type=range]").change(changeColor);
+
+$('#addNewColor').click(function() {
+  $('.selected').css('background-color', getRGB());
+  $('#colorSelect').hide();
+  
+});
+  
+
