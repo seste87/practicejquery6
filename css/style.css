@@ -42,15 +42,15 @@ ul li {
 }
 
 .red {
-	background: #fc4c4f;
+	background: rgb(252,76,79);
 }
 
 .blue {
-	background: #4fa3fc;
+	background: rgb(79,163,252);
 }
 
 .yellow {
-	background: #ECD13F;
+	background: rgb(236,209,63);
 }
 
 .selected {

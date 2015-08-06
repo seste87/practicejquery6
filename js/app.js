@@ -18,17 +18,26 @@
 
 var color = $('.selected').css('background-color');
 
-var red = $('#red').val();
-var green = $('#green').val();
-var blue = $('#blue').val();
+
+
+// document.getElementsByTagName('canvas')[0];
+var context = $('canvas')[0].getContext('2d');
 
 function getRGB() {
-  red = $('#red').val();
-  green = $('#green').val();
-  blue = $('#blue').val();
+  var red = $('#red').val();
+  var green = $('#green').val();
+  var blue = $('#blue').val();
   
-  return "rgb(" + red + ", " + green + ", " + blue + ")";
+  
+  
+  return "rgb(" + red 
+          + " , " + green 
+          + " , " + blue + ")";
 }
+
+
+
+
 
 // update the new color
 function changeColor() {
@@ -37,16 +46,20 @@ function changeColor() {
   
 }
 
-$('.controls li').click(function() {
+// The 'on' method will make sure any new children
+// of the selecter have this function bound to it.
+// In this case, all new list item children of the
+// control class will also be bound to this
+// handler triggered by the click method.
+$('.controls').on("click", "li" , function() {
   // remove selected from all other list items
   $(this).siblings().removeClass('selected');
   // add selected to this list item
   $(this).addClass('selected');
   // cache the selected background color
   color = $(this).css('background-color');
+  
 });
-
-
 
 $('#revealColorSelect').click(function () {
     
@@ -59,8 +72,26 @@ $("input[type=range]").change(changeColor);
 
 $('#addNewColor').click(function() {
   $('.selected').css('background-color', getRGB());
-  $('#colorSelect').hide();
-  
+  //$('#colorSelect').hide();
 });
-  
+
+$('#addNewColor').dblclick(function() {
+  var $newColor = $('<li></li>');
+  $newColor.css('background-color', $('#newColor').css('background-color'));
+  $('.controls ul').append($newColor);
+  $newColor.click();
+});
+
+context.beginPath();
+context.moveTo(10,10);
+context.lineTo(20,10);
+context.lineTo(20,20);
+context.lineTo(10,20);
+context.closePath();
+
+context.stroke();
+
+//mousedown
+//mousemove
+//mouseup
 
