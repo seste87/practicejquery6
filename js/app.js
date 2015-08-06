@@ -17,22 +17,18 @@
 // On mouse events on the canvas, draw lines
 
 var color = $('.selected').css('background-color');
-
-
-
 // document.getElementsByTagName('canvas')[0];
 var context = $('canvas')[0].getContext('2d');
+var $canvas = $('canvas');
+var lastEvent;
+var mouseDown = false;
 
 function getRGB() {
   var red = $('#red').val();
   var green = $('#green').val();
   var blue = $('#blue').val();
   
-  
-  
-  return "rgb(" + red 
-          + " , " + green 
-          + " , " + blue + ")";
+  return "rgb(" + red + " , " + green + " , " + blue + ")";
 }
 
 
@@ -70,28 +66,31 @@ $('#revealColorSelect').click(function () {
   
 $("input[type=range]").change(changeColor);
 
-$('#addNewColor').click(function() {
+  $('#addNewColor').click(function() {
   $('.selected').css('background-color', getRGB());
-  //$('#colorSelect').hide();
+  $('#colorSelect').hide();
 });
 
-$('#addNewColor').dblclick(function() {
+$('#addNewColor').click(function() {
   var $newColor = $('<li></li>');
   $newColor.css('background-color', $('#newColor').css('background-color'));
   $('.controls ul').append($newColor);
   $newColor.click();
 });
 
-context.beginPath();
-context.moveTo(10,10);
-context.lineTo(20,10);
-context.lineTo(20,20);
-context.lineTo(10,20);
-context.closePath();
-
-context.stroke();
-
-//mousedown
-//mousemove
-//mouseup
+$canvas.mousedown(function(e) {
+  lastEvent = e;
+  mouseDown = true;
+}).mousemove(function(e){
+  if(mouseDown) {
+  context.beginPath();
+  context.moveTo(lastEvent.offsetX,lastEvent.offsetY);
+  context.lineTo(e.offsetX,e.offsetY);
+  context.strokeStyle = color;
+  context.stroke();
+  lastEvent = e;
+  }
+}).mouseup(function() {
+  mouseDown = false;
+});
 
